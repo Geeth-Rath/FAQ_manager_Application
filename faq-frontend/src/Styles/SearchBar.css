@@ -1,0 +1,22 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  padding: 17px 24px;
+  height: 40px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 1rcap;
+}
+.search-input {
+  flex: 5;
+  margin-right: 10px;
+  height: 100%;
+}
+
+.search-button {
+  flex: 1;
+  height: 100%;
+}
+.search-input .ant-input {
+  background-color: green;
+  color: white;
+}
