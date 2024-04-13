@@ -14,13 +14,30 @@ const View = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [formData, setFormData] = useState(null);
+  const [data, setData] = useState(null);
+  const [question, setQuestion] = useState("");
+  const [category, setCategory] = useState("Select Category");
+  const [state, setState] = useState("Draft");
+  const [formdata, setFormdata] = useState({
+    category: "",
+    question: "",
+    state: "",
+  });
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setFormdata((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   useEffect(() => {
     const fetchQuestionDetails = async () => {
       try {
         const data = await dispatch(fetchQuestionById(id)).unwrap();
-        setFormData(data);
+        setFormdata(data);
+        console.log("fdff", data);
       } catch (error) {
         console.error("Error fetching question details:", error);
       }
@@ -28,8 +45,10 @@ const View = () => {
     fetchQuestionDetails();
   }, [dispatch, id]);
 
-  const onFinish = (values) => {
-    dispatch(updateQuestionById({ questionId: id, updatedData: values }))
+  const onFinish = (value) => {
+    value.preventDefault();
+    console.log("onFinis ", formdata);
+    dispatch(updateQuestionById({ questionId: id, updatedData: formdata }))
       .unwrap()
       .then(() => {
         message.success("Updating is Successful.");
@@ -50,113 +69,68 @@ const View = () => {
     window.location.reload();
   };
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
-  if (!formData) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div className="registration-container">
-      <div className="registration-form">
+    <div className=" d-flex justify-content-center align-items-center pt-5 pb-5">
+      <form class=" g-3 rounded shadow p-4" onSubmit={onFinish}>
         <h1>Update Question</h1>
-        <Form
-          name="basic"
-          initialValues={{
-            question: formData.question,
-            category: formData.category,
-            state: formData.state,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            name="question"
-            rules={[
-              {
-                required: true,
-                message: "Please input your question!",
-              },
-            ]}
-          >
-            <Input.TextArea rows={4} />
-          </Form.Item>
 
-          <Form.Item
+        <div class="">
+          <select
+            class="form-select form-select-sm mb-3"
+            aria-label="Default select example"
+            value={formdata && formdata.category}
             name="category"
-            rules={[
-              {
-                required: true,
-                message: "Please select a category!",
-              },
-            ]}
+            onChange={onChange}
           >
-            <Select
-              placeholder="Select a category"
-              style={{ width: "100%", marginBottom: "10px" }}
-            >
-              <Option value="IT">IT</Option>
-              <Option value="Maths">Maths</Option>
-              <Option value="Science">Science</Option>
-              <Option value="Arts">Arts</Option>
-              <Option value="Commerce">Commerce</Option>
-            </Select>
-          </Form.Item>
+            <option selected value="IT">
+              IT
+            </option>
+            <option value="Maths">Maths</option>
+            <option value="Science">Science</option>
+            <option value="Arts">Arts</option>
+            <option value="Commerce">Commerce</option>
+          </select>
+        </div>
+        <div>
+          <textarea
+            class="form-control mb-3"
+            id="exampleFormControlTextarea1"
+            aria-label="Default select example"
+            rows="6"
+            value={formdata && formdata.question}
+            placeholder="enter your question"
+            name="question"
+            onChange={onChange}
+          ></textarea>
+        </div>
 
-          <Form.Item
+        <div>
+          <select
+            class="form-select form-select-sm mb-3"
+            aria-label="Default select example"
+            value={formdata && formdata.state}
             name="state"
-            rules={[
-              {
-                required: true,
-                message: "Please select an state!",
-              },
-            ]}
+            onChange={onChange}
           >
-            <Select
-              placeholder="Select an state"
-              style={{ width: "100%", marginBottom: "10px" }}
-            >
-              <Option value="Draft">Draft</Option>
-              <Option value="Publish">Publish</Option>
-            </Select>
-          </Form.Item>
+            <option value="Draft">Draft</option>
+            <option value="Publish">Publish</option>
+          </select>
+        </div>
 
-          <Form.Item>
-            <div
-              className="form-buttons"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
-              <div>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="registration-btn"
-                >
-                  Update
-                </Button>
-              </div>
-
-              <div>
-                <Button
-                  type="default"
-                  onClick={handleCancel}
-                  className="registration-btn"
-                >
-                  Cancel
-                </Button>
-              </div>
-            </div>
-          </Form.Item>
-        </Form>
-      </div>
+        <div class="d-flex justify-content-end gap-3">
+          <button type="submit" class="btn btn-secondary ">
+            Update
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            onClick={() => handleCancel("Draft")}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

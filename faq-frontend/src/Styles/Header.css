@@ -1,4 +1,4 @@
-.header-container {
+/* .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,7 +19,7 @@
 
 .header-title {
   font-size: 24px;
-}
+} */
 
 .add-button {
   height: 41px;
@@ -33,6 +33,8 @@
 }
 
 
+/*
+
 @media only screen and (max-device-width: 675px) {
   .header-container {
    
@@ -41,7 +43,7 @@
   }
   
   .header-left, .header-right {
-    /* width: 100%; */
+
   }
   .header-right {
     margin-top: 23px;
@@ -49,4 +51,9 @@
 }
 }
 
-
+ */
+ /* @media (max-width: 720px) {
+  .header-text-sm {
+    font-size: 15px; 
+  }
+} */

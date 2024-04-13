@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Button } from "antd";
+// import { Input, Button } from "antd";
 import "../../Styles/SearchBar.css";
 import { useDispatch } from "react-redux";
 import { getText } from "../Redux/Slice/questionSlice";
@@ -23,22 +23,30 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search-container">
-      <Input
-        className="search-input"
-        placeholder="Search..."
-        style={inputStyle}
-        value={searchText}
-        onChange={handleInputChange}
-      />
-      <Button
-        className="search-button"
-        type="primary"
-        onClick={handleSearchClick}
-      >
-        Search
-      </Button>
+   <div className="search-container p-3 rounded-3">
+     <div className="row">
+      <div className="col">
+        <input
+          class="form-control"
+          type="text"
+          aria-label="default input example"
+          placeholder="Search..."
+          style={inputStyle}
+          value={searchText}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="col-auto">
+        <button
+          type="button"
+          class="btn btn-primary"
+          onClick={handleSearchClick}
+        >
+          Search
+        </button>
+      </div>
     </div>
+   </div>
   );
 };
 

@@ -7,10 +7,9 @@ import Header from "../Header/Header";
 
 const Container = () => {
   return (
-    <div>
-      <div>
-        <Header />
-      </div>
+    <div className="container">
+      <Header />
+
       <div className="container">
         <div className="content-wrapper">
           <SearchBar />

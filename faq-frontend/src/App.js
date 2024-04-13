@@ -1,7 +1,8 @@
+
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-// import { Provider } from 'react-redux';
-// import store from './Redux/Store.js';
 import Container from './Component/Container/Container';
 import Login from './Component/Login/Login';
 import Registration from './Component/Registration/Registration';
@@ -10,9 +11,9 @@ import View from './Component/View/View';
 function App() {
   return (
   
-      <div className="App">
+      <div className="App ">
         <Router>
-          {/* <ActionPopup /> */}
+       
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<Login />} />

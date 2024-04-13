@@ -22,7 +22,6 @@ export const postQuestion = createAsyncThunk(
         "http://localhost:8080/questions/create",
         requestData
       );
-
       return response.data;
     } catch (error) {
       throw new Error("Failed to post question");
@@ -68,7 +67,6 @@ export const deleteQuestion = createAsyncThunk(
   async (questionId) => {
     try {
       await axios.delete(`http://localhost:8080/questions/${questionId}`);
-      console.log("questionId", questionId);
       return questionId;
     } catch (error) {
       throw new Error("Failed to delete question");
